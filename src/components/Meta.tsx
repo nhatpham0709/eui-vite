@@ -10,7 +10,7 @@ export default function Meta(props: Props) {
 
   return (
     <Helmet>
-      <title>{title ? `${title} | EUI` : 'EUI'}</title>
+      <title>{title ? `${title} | EUI` : 'EUI Vite Template'}</title>
       <meta name='description' content={description} />
     </Helmet>
   )

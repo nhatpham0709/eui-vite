@@ -7,20 +7,26 @@ import PageLoading from '../components/layouts/Loading'
 import { EuiColorProvider } from '@/providers/EuiColorProvider'
 import Meta from '@/components/Meta'
 import { Toaster } from 'react-hot-toast'
+import { Provider } from 'react-redux'
+import { store } from '@/store'
+import CustomNprogress from '@/components/Nprogress'
 
 export default function App() {
   return (
     <Suspense fallback={<PageLoading />}>
-      <ThemeContextProvider>
-        <EuiColorProvider>
-          <EuiErrorBoundary>
-            <Meta />
-            <Toaster />
+      <CustomNprogress />
+      <Provider store={store}>
+        <ThemeContextProvider>
+          <EuiColorProvider>
+            <EuiErrorBoundary>
+              <Meta />
+              <Toaster />
 
-            <Outlet />
-          </EuiErrorBoundary>
-        </EuiColorProvider>
-      </ThemeContextProvider>
+              <Outlet />
+            </EuiErrorBoundary>
+          </EuiColorProvider>
+        </ThemeContextProvider>
+      </Provider>
     </Suspense>
   )
 }
