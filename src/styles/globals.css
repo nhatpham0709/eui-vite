@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --euiFixedHeadersOffset: 96px !important; 
+  --euiFixedHeadersOffset: 96px !important;
+}
+
+:focus-visible {
+  outline: none !important;
 }

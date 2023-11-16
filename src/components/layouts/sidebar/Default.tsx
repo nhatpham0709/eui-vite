@@ -1,23 +1,14 @@
 import { useState } from 'react'
 import {
-  logicalCSSWithFallback,
-  EuiCollapsibleNav,
   EuiCollapsibleNavGroup,
-  EuiHeaderSectionItemButton,
-  EuiHeader,
-  EuiIcon,
-  EuiButton,
   EuiPinnableListGroup,
   EuiPinnableListGroupItemProps,
   EuiFlexItem,
-  EuiHorizontalRule,
-  EuiListGroup,
-  useGeneratedHtmlId
+  EuiHorizontalRule
 } from '@elastic/eui'
 import find from 'lodash/find'
 import findIndex from 'lodash/findIndex'
 import { css } from '@emotion/react'
-import { HeaderSpacesMenu } from './SpacesMenu'
 const TopLinks: EuiPinnableListGroupItemProps[] = [
   {
     label: 'Home',
@@ -51,8 +42,8 @@ const LearnLinks: EuiPinnableListGroupItemProps[] = [
   { label: 'Webinars', onClick: () => {} },
   { label: 'Elastic.co', href: 'https://elastic.co' }
 ]
-export const SubHeader = () => {
-  const [navIsOpen, setNavIsOpen] = useState(false)
+
+export const DefaultSidebar = () => {
   /**
    * Accordion toggling
    */
@@ -118,48 +109,12 @@ export const SubHeader = () => {
   function addLinkNameToUnpinTitle(listItem: EuiPinnableListGroupItemProps) {
     return `Unpin ${listItem.label}`
   }
-  const collapsibleNavId = useGeneratedHtmlId({ prefix: 'collapsibleNav' })
-  const collapsibleNav = (
-    <EuiCollapsibleNav
-      id={collapsibleNavId}
-      aria-label='Main navigation'
-      isOpen={navIsOpen}
-      button={
-        <EuiHeaderSectionItemButton aria-label='Toggle main navigation' onClick={() => setNavIsOpen(!navIsOpen)}>
-          <EuiIcon type={'menu'} size='m' aria-hidden='true' />
-        </EuiHeaderSectionItemButton>
-      }
-      onClose={() => setNavIsOpen(false)}
-      // Accessibility - Add scroll to nav on very small screens
-      css={css`
-        @media (max-height: 15em) {
-          ${logicalCSSWithFallback('overflow-y', 'auto')}
-        }
-      `}
-    >
-      {/* Dark deployments section */}
-      <EuiFlexItem grow={false} style={{ flexShrink: 0 }}>
-        <EuiCollapsibleNavGroup isCollapsible={false} background='dark'>
-          <EuiListGroup
-            maxWidth='none'
-            gutterSize='none'
-            size='s'
-            listItems={[
-              {
-                label: 'Manage deployment',
-                href: '#',
-                iconType: 'logoCloud',
-                iconProps: {
-                  color: 'ghost'
-                }
-              }
-            ]}
-          />
-        </EuiCollapsibleNavGroup>
-      </EuiFlexItem>
+
+  return (
+    <>
       {/* Shaded pinned section always with a home item */}
       <EuiFlexItem grow={false} style={{ flexShrink: 0 }}>
-        <EuiCollapsibleNavGroup background='light' style={{ maxHeight: '40vh' }} className='eui-yScroll'>
+        <EuiCollapsibleNavGroup background='light' style={{ maxHeight: '40vh' }}>
           <EuiPinnableListGroup
             aria-label='Pinned links' // A11y : Since this group doesn't have a visible `title` it should be provided an accessible description
             listItems={alterLinksWithCurrentState(TopLinks).concat(alterLinksWithCurrentState(pinnedItems, true))}
@@ -173,9 +128,7 @@ export const SubHeader = () => {
         </EuiCollapsibleNavGroup>
       </EuiFlexItem>
       <EuiHorizontalRule margin='none' />
-      {/* BOTTOM */}
       <EuiFlexItem
-        className='eui-yScroll'
         // Accessibility - Allows nav items to be seen and interacted with on very small screen sizes
         css={css`
           @media (max-height: 15em) {
@@ -183,7 +136,6 @@ export const SubHeader = () => {
           }
         `}
       >
-        {/* Kibana section */}
         <EuiCollapsibleNavGroup
           title={
             <a className='eui-textInheritColor' href='#/navigation/collapsible-nav' onClick={e => e.stopPropagation()}>
@@ -231,37 +183,6 @@ export const SubHeader = () => {
           />
         </EuiCollapsibleNavGroup>
       </EuiFlexItem>
-      <EuiFlexItem grow={false}>
-        {/* Span fakes the nav group into not being the first item and therefore adding a top border */}
-        <span />
-        <EuiCollapsibleNavGroup>
-          <EuiButton fill fullWidth iconType='plusInCircleFilled'>
-            Add data
-          </EuiButton>
-        </EuiCollapsibleNavGroup>
-      </EuiFlexItem>
-    </EuiCollapsibleNav>
-  )
-  const leftSectionItems = [collapsibleNav, <HeaderSpacesMenu />]
-  return (
-    <>
-      <EuiHeader
-        position='fixed'
-        sections={[
-          {
-            items: leftSectionItems,
-            breadcrumbs: [
-              {
-                text: 'Management',
-                onClick: () => {}
-              },
-              {
-                text: 'Users'
-              }
-            ]
-          }
-        ]}
-      />
     </>
   )
 }

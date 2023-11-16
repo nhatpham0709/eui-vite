@@ -1,5 +1,5 @@
-import MainHeader from "./MainHeader";
-import { SubHeader } from "./SubHeader";
+import MainHeader from './MainHeader'
+import { SubHeader } from './SubHeader'
 
 export const Header = () => {
   return (
@@ -7,5 +7,5 @@ export const Header = () => {
       <MainHeader />
       <SubHeader />
     </>
-  );
-};
+  )
+}
