@@ -15,9 +15,12 @@ export default function Page() {
       setIsLoading(false)
     }
   }
+  
   return (
-    <EuiButton isLoading={isLoading} iconSide='right' onClick={onButtonClick}>
-      Test API
-    </EuiButton>
+    <>
+      <EuiButton isLoading={isLoading} iconSide='right' onClick={onButtonClick}>
+        Test API
+      </EuiButton>
+    </>
   )
 }

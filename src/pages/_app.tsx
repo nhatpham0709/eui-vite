@@ -21,7 +21,6 @@ export default function App() {
             <EuiErrorBoundary>
               <Meta />
               <Toaster />
-
               <Outlet />
             </EuiErrorBoundary>
           </EuiColorProvider>
